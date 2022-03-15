@@ -1,4 +1,4 @@
-package com.example.DFESW12FinalProject.domain;
+package com.example.DFESW12UserProject.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

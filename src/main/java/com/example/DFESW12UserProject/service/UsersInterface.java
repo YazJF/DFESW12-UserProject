@@ -1,9 +1,8 @@
-package com.example.DFESW12FinalProject.service;
+package com.example.DFESW12UserProject.service;
 
-import com.example.DFESW12FinalProject.domain.Users;
+import com.example.DFESW12UserProject.domain.Users;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UsersInterface<T> {
 

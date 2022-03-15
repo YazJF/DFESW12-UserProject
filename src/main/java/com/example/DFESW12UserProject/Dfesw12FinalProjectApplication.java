@@ -1,4 +1,4 @@
-package com.example.DFESW12FinalProject;
+package com.example.DFESW12UserProject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

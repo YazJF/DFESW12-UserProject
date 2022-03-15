@@ -1,11 +1,10 @@
-package com.example.DFESW12FinalProject.service;
+package com.example.DFESW12UserProject.service;
 
 
-import com.example.DFESW12FinalProject.domain.Users;
-import com.example.DFESW12FinalProject.repo.UsersRepo;
+import com.example.DFESW12UserProject.domain.Users;
+import com.example.DFESW12UserProject.repo.UsersRepo;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
