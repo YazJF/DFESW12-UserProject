@@ -42,6 +42,9 @@ public class UsersServiceTest {
     void testCreate() {
         Mockito.when(this.rep.save(input)).thenReturn(returned);
 
+//        System.out.println(returned); //additional measure to check accuracy
+//        System.out.println(this.serv.create(input));
+
         assertThat(this.serv.create(input)).isEqualTo(returned);
 
         Mockito.verify(this.rep, Mockito.times(1)).save(input);
@@ -67,6 +70,9 @@ public class UsersServiceTest {
 
         Mockito.when(this.rep.findById(searchId)).thenReturn(Optional.of(returned));
 
+//        System.out.println(returned); //additional measure to check accuracy
+//        System.out.println(this.serv.findById(searchId));
+
         assertThat(this.serv.findById(searchId)).isEqualTo(returned);
 
         Mockito.verify(this.rep, Mockito.times(1)).findById(searchId);
@@ -90,12 +96,15 @@ public class UsersServiceTest {
 
         Users toUpdate = new Users("john","finlayson","john@john.com","yazjf","pass",29,false);
 
-        Optional<Users> opt = Optional.of(returned);
+        Optional<Users> optUser = Optional.of(returned);
 
         Users updated = new Users(id, toUpdate.getFirstname(), toUpdate.getSurname(), toUpdate.getEmail(), toUpdate.getUsername(), toUpdate.getPassword(), toUpdate.getAge(), toUpdate.getMailingList());
 
-        Mockito.when(this.rep.findById(id)).thenReturn(opt);
+        Mockito.when(this.rep.findById(id)).thenReturn(optUser);
         Mockito.when(this.rep.save(updated)).thenReturn(updated);
+
+//        System.out.println(updated); //additional measure to check accuracy
+//        System.out.println(this.serv.update(id, toUpdate));
 
         assertThat(this.serv.update(id, toUpdate)).isEqualTo(updated);
 

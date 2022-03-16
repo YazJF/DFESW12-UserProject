@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Sql(scripts = {"classpath:users","classpath:users-data.sql"}, executionPhase = Sql.ExecutionPhase,BEFORE_TEST_METHOD)
+//@Sql(scripts = {"classpath:users","classpath:users-data.sql"}, executionPhase = Sql.ExecutionPhase,BEFORE_TEST_METHOD)
 @ActiveProfiles("test")
 public class UsersControllerTest {
 
