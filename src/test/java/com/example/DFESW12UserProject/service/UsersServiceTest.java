@@ -12,10 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.example.DFESW12UserProject.domain.Users;
-import com.example.DFESW12UserProject.repo.UsersRepo;
+//import com.example.DFESW12UserProject.domain.Users;
+//import com.example.DFESW12UserProject.repo.UsersRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -58,6 +59,48 @@ public class UsersServiceTest {
         Mockito.verify(this.rep, Mockito.times(1)).findAll();
 
 
+    }
+
+    @Test
+    void testFindById() {
+        Long searchId = 1L;
+
+        Mockito.when(this.rep.findById(searchId)).thenReturn(Optional.of(returned));
+
+        assertThat(this.serv.findById(searchId)).isEqualTo(returned);
+
+        Mockito.verify(this.rep, Mockito.times(1)).findById(searchId);
+
+    }
+
+    @Test
+    void testDelete() {
+        Long id = 1L;
+
+        Mockito.when(this.rep.existsById(id)).thenReturn(false);
+
+        assertThat(this.serv.delete(id)).isTrue();
+
+        Mockito.verify(this.rep, Mockito.times(1)).existsById(id);
+    }
+
+    @Test
+    void testUpdate() {
+        Long id = 1L;
+
+        Users toUpdate = new Users("john","finlayson","john@john.com","yazjf","pass",29,false);
+
+        Optional<Users> opt = Optional.of(returned);
+
+        Users updated = new Users(id, toUpdate.getFirstname(), toUpdate.getSurname(), toUpdate.getEmail(), toUpdate.getUsername(), toUpdate.getPassword(), toUpdate.getAge(), toUpdate.getMailingList());
+
+        Mockito.when(this.rep.findById(id)).thenReturn(opt);
+        Mockito.when(this.rep.save(updated)).thenReturn(updated);
+
+        assertThat(this.serv.update(id, toUpdate)).isEqualTo(updated);
+
+        Mockito.verify(this.rep, Mockito.times(1)).findById(id);
+        Mockito.verify(this.rep, Mockito.times(1)).save(updated);
     }
 
 
