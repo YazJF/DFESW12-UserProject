@@ -27,8 +27,8 @@ public class UsersController {
         return new ResponseEntity(this.service.read(), HttpStatus.FOUND);
     }
 
-    @PostMapping("/deleteById/{id}")
-    public ResponseEntity<Users> deleteById(@PathVariable("id") Long id) {
+    @DeleteMapping("/deleteById/{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Long id) {
         return new ResponseEntity(this.service.delete(id), HttpStatus.GONE);
     }
 

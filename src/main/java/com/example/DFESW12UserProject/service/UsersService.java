@@ -46,7 +46,8 @@ public class UsersService implements UsersInterface<Long>{
     @Override
     public Boolean delete(Long id) {
         this.repo.deleteById(id);
-        return !this.repo.existsById(id);
+        boolean exists = this.repo.existsById(id);
+        return !exists;
     }
 
 
