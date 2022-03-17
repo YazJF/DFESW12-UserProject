@@ -2,6 +2,7 @@ package com.example.DFESW12UserProject.service;
 
 
 import com.example.DFESW12UserProject.domain.Users;
+import com.example.DFESW12UserProject.exceptions.UserNotFoundException;
 import com.example.DFESW12UserProject.repo.UsersRepo;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +54,7 @@ public class UsersService implements UsersInterface<Long>{
 
     public Users findById(Long id) {
         Optional<Users> foundUser = this.repo.findById(id);
-        return foundUser.orElse(null);
+        return foundUser.orElseThrow(UserNotFoundException::new);
     }
 
     @Override
