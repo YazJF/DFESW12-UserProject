@@ -1,8 +1,15 @@
 package com.example.DFESW12UserProject.service;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 import com.example.DFESW12UserProject.domain.Users;
+import com.example.DFESW12UserProject.exceptions.UserNotFoundException;
 import com.example.DFESW12UserProject.repo.UsersRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +47,7 @@ public class UsersServiceTest {
 
     @Test
     void testCreate() {
-        Mockito.when(this.rep.save(input)).thenReturn(returned);
+        when(this.rep.save(input)).thenReturn(returned);
 
 //        System.out.println(returned); //additional measure to check accuracy
 //        System.out.println(this.serv.create(input));
@@ -55,7 +62,7 @@ public class UsersServiceTest {
     void testRead() {
         List<Users> userList = List.of(new Users("john","finlayson","john@john.com","yazjf","pass",29L,false));
 
-        Mockito.when(this.rep.findAll()).thenReturn(userList);
+        when(this.rep.findAll()).thenReturn(userList);
 
         assertThat(this.serv.read()).isEqualTo(userList);
 
@@ -68,7 +75,7 @@ public class UsersServiceTest {
     void testFindById() {
         Long searchId = 1L;
 
-        Mockito.when(this.rep.findById(searchId)).thenReturn(Optional.of(returned));
+        when(this.rep.findById(searchId)).thenReturn(Optional.of(returned));
 
 //        System.out.println(returned); //additional measure to check accuracy
 //        System.out.println(this.serv.findById(searchId));
@@ -83,7 +90,7 @@ public class UsersServiceTest {
     void testDelete() {
         Long id = 1L;
 
-        Mockito.when(this.rep.existsById(id)).thenReturn(false);
+        when(this.rep.existsById(id)).thenReturn(false);
 
         assertThat(this.serv.delete(id)).isTrue();
 
@@ -100,8 +107,8 @@ public class UsersServiceTest {
 
         Users updated = new Users(id, toUpdate.getFirstname(), toUpdate.getSurname(), toUpdate.getEmail(), toUpdate.getUsername(), toUpdate.getPassword(), toUpdate.getAge(), toUpdate.getMailingList());
 
-        Mockito.when(this.rep.findById(id)).thenReturn(optUser);
-        Mockito.when(this.rep.save(updated)).thenReturn(updated);
+        when(this.rep.findById(id)).thenReturn(optUser);
+        when(this.rep.save(updated)).thenReturn(updated);
 
 //        System.out.println(updated); //additional measure to check accuracy
 //        System.out.println(this.serv.update(id, toUpdate));
@@ -116,7 +123,7 @@ public class UsersServiceTest {
     void testGetByAge() {
         Long searchAge = 29L;
 
-        Mockito.when(this.rep.findByAge(searchAge)).thenReturn(List.of(returned));
+        when(this.rep.findByAge(searchAge)).thenReturn(List.of(returned));
 
 //        System.out.println(returned); //additional measure to check accuracy
 //        System.out.println(this.serv.findByAge(searchAge));
@@ -130,7 +137,7 @@ public class UsersServiceTest {
     void findByMailingList() {
         Boolean userOnList = false;
 
-        Mockito.when(this.rep.findByMailingList(userOnList)).thenReturn(List.of(returned));
+        when(this.rep.findByMailingList(userOnList)).thenReturn(List.of(returned));
 
 //        System.out.println(returned); //additional measure to check accuracy
 //        System.out.println(this.serv.findByAge(searchAge));
@@ -139,7 +146,10 @@ public class UsersServiceTest {
 
         Mockito.verify(this.rep, Mockito.times(1)).findByMailingList(userOnList);
     }
-
-
+    
+    @Test
+    public void shouldThrowException() {
+        assertThatThrownBy(() -> this.serv.findById(100L)).hasStackTraceContaining("UserNotFoundException");
+    }
 
 }
