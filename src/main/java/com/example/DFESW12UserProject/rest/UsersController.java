@@ -42,6 +42,15 @@ public class UsersController {
         return new ResponseEntity(this.service.update(id, updated), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/getByAge/{age}")
+    public ResponseEntity getByAge(@PathVariable("age") Long age) {
+        return new ResponseEntity(this.service.findByAge(age), HttpStatus.FOUND);
+    }
+
+    @GetMapping("/findByMailingList/{mailList}")
+    public ResponseEntity mailingSubs(@PathVariable("mailList") Boolean mailList) {
+        return new ResponseEntity(this.service.findByMailingList(mailList), HttpStatus.FOUND);
+    }
 
 
 }
