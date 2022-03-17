@@ -15,7 +15,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -67,5 +70,71 @@ public class UsersControllerTest {
     void readAll() throws Exception {
 
 
+        String findAll =  this.map.writeValueAsString(List.of(new Users(1L,"john","finlayson","john@john.com","yazjf","pass",29,false)));
+
+
+        RequestBuilder mockRequest = get("/readAll");
+
+
+        ResultMatcher matchStatus = status().isFound();
+        ResultMatcher matchBody = content().json(findAll);
+
+        this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchBody);
+
     }
+
+    @Test
+    void deleteByID() throws Exception {
+        Long id = 1L;
+
+        RequestBuilder mockRequest = delete("/deleteById/" + id);
+
+
+        ResultMatcher matchStatus = status().isGone();
+        ResultMatcher matchBody = content().string("true");
+
+        this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchBody);
+
+
+
+    }
+
+    @Test
+    void findByID() throws Exception{
+        Long id = 1L;
+
+        Users testUser =  new Users(1L,"john","finlayson","john@john.com","yazjf","pass",29,false);
+
+        String createJSON = this.map.writeValueAsString(testUser);
+
+        RequestBuilder mockRequest = get("/findById/" + id);
+
+
+        ResultMatcher matchStatus = status().isFound();
+        ResultMatcher matchBody = content().json(createJSON);
+
+        this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchBody);
+
+    }
+
+    @Test
+    void update() throws Exception{
+        Long id = 1L;
+
+        Users testUser =  new Users(1L,"jhn","fnlayson","john@john.com","yazjf","pass",29,false);
+
+        String createJSON = this.map.writeValueAsString(testUser);
+
+        RequestBuilder mockRequest = put("/update/" + id).contentType(MediaType.APPLICATION_JSON)
+                .content(createJSON);
+
+
+        ResultMatcher matchStatus = status().isAccepted();
+        ResultMatcher matchBody = content().json(createJSON);
+
+        this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchBody);
+
+
+    }
+
 }

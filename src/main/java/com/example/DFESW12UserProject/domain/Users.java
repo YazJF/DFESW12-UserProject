@@ -1,5 +1,6 @@
 package com.example.DFESW12UserProject.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Users {
 
 
@@ -26,18 +28,6 @@ public class Users {
     private int age;
     private Boolean mailingList;
 
-
-    public Users(Long id, String firstname, String surname, String email, String username, String password, int age, Boolean mailingList) {
-        super();
-        this.id = id;
-        this.firstname = firstname;
-        this.surname = surname;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.age = age;
-        this.mailingList = mailingList;
-    }
 
     public Users(String firstname, String surname, String email, String username, String password, int age, Boolean mailingList) {
         this.firstname = firstname;
