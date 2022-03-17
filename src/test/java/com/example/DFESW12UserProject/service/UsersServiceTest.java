@@ -34,8 +34,8 @@ public class UsersServiceTest {
 
     @BeforeEach
     void setUp() {
-        input = new Users("john","finlayson","john@john.com","yazjf","pass",29,false);
-        returned = new Users(1L,"john","finlayson","john@john.com","yazjf","pass",29,false);
+        input = new Users("john","finlayson","john@john.com","yazjf","pass",29L,false);
+        returned = new Users(1L,"john","finlayson","john@john.com","yazjf","pass",29L,false);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class UsersServiceTest {
 
     @Test
     void testRead() {
-        List<Users> userList = List.of(new Users("john","finlayson","john@john.com","yazjf","pass",29,false));
+        List<Users> userList = List.of(new Users("john","finlayson","john@john.com","yazjf","pass",29L,false));
 
         Mockito.when(this.rep.findAll()).thenReturn(userList);
 
@@ -94,7 +94,7 @@ public class UsersServiceTest {
     void testUpdate() {
         Long id = 1L;
 
-        Users toUpdate = new Users("john","finlayson","john@john.com","yazjf","pass",29,false);
+        Users toUpdate = new Users("john","finlayson","john@john.com","yazjf","pass",29L,false);
 
         Optional<Users> optUser = Optional.of(returned);
 
@@ -110,6 +110,34 @@ public class UsersServiceTest {
 
         Mockito.verify(this.rep, Mockito.times(1)).findById(id);
         Mockito.verify(this.rep, Mockito.times(1)).save(updated);
+    }
+
+    @Test
+    void testGetByAge() {
+        Long searchAge = 29L;
+
+        Mockito.when(this.rep.findByAge(searchAge)).thenReturn(List.of(returned));
+
+//        System.out.println(returned); //additional measure to check accuracy
+//        System.out.println(this.serv.findByAge(searchAge));
+
+        assertThat(this.serv.findByAge(searchAge)).isEqualTo(List.of(returned));
+
+        Mockito.verify(this.rep, Mockito.times(1)).findByAge(searchAge);
+    }
+
+    @Test
+    void findByMailingList() {
+        Boolean userOnList = false;
+
+        Mockito.when(this.rep.findByMailingList(userOnList)).thenReturn(List.of(returned));
+
+//        System.out.println(returned); //additional measure to check accuracy
+//        System.out.println(this.serv.findByAge(searchAge));
+
+        assertThat(this.serv.findByMailingList(userOnList)).isEqualTo(List.of(returned));
+
+        Mockito.verify(this.rep, Mockito.times(1)).findByMailingList(userOnList);
     }
 
 

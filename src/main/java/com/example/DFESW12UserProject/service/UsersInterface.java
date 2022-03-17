@@ -14,5 +14,9 @@ public interface UsersInterface<T> {
 
     Boolean delete(T id);
 
+    List<Users> findByAge(T age);
+
+    List<Users> findByMailingList(Boolean mailList);
+
 
 }

@@ -25,11 +25,11 @@ public class Users {
     private String email;
     private String username;
     private String password;
-    private int age;
+    private Long age;
     private Boolean mailingList;
 
 
-    public Users(String firstname, String surname, String email, String username, String password, int age, Boolean mailingList) {
+    public Users(String firstname, String surname, String email, String username, String password, Long age, Boolean mailingList) {
         this.firstname = firstname;
         this.surname = surname;
         this.email = email;

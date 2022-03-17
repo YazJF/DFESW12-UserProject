@@ -40,7 +40,7 @@ public class UsersControllerTest {
         //--request
         //type, url, body??
         //BODY - json - object
-        Users create =  new Users("john","finlayson","john@john.com","yazjf","pass",29,false);
+        Users create =  new Users("john","finlayson","john@john.com","yazjf","pass",29L,false);
 
         // convert into JSON
         String createJSON = this.map.writeValueAsString(create);
@@ -50,7 +50,7 @@ public class UsersControllerTest {
 
         //--response
         // body(JSON with id) + status
-        Users saved = new Users(2L,"john","finlayson","john@john.com","yazjf","pass",29,false);
+        Users saved = new Users(2L,"john","finlayson","john@john.com","yazjf","pass",29L,false);
         //convert into JSON
 
         String savedJSON = this.map.writeValueAsString(saved);
@@ -70,7 +70,7 @@ public class UsersControllerTest {
     void readAll() throws Exception {
 
 
-        String findAll =  this.map.writeValueAsString(List.of(new Users(1L,"john","finlayson","john@john.com","yazjf","pass",29,false)));
+        String findAll =  this.map.writeValueAsString(List.of(new Users(1L,"john","finlayson","john@john.com","yazjf","pass",29L,false)));
 
 
         RequestBuilder mockRequest = get("/readAll");
@@ -103,7 +103,7 @@ public class UsersControllerTest {
     void findByID() throws Exception{
         Long id = 1L;
 
-        Users testUser =  new Users(1L,"john","finlayson","john@john.com","yazjf","pass",29,false);
+        Users testUser =  new Users(1L,"john","finlayson","john@john.com","yazjf","pass",29L,false);
 
         String createJSON = this.map.writeValueAsString(testUser);
 
@@ -121,7 +121,7 @@ public class UsersControllerTest {
     void update() throws Exception{
         Long id = 1L;
 
-        Users testUser =  new Users(1L,"jhn","fnlayson","john@john.com","yazjf","pass",29,false);
+        Users testUser =  new Users(1L,"jhn","fnlayson","john@john.com","yazjf","pass",29L,false);
 
         String createJSON = this.map.writeValueAsString(testUser);
 
@@ -133,6 +133,44 @@ public class UsersControllerTest {
         ResultMatcher matchBody = content().json(createJSON);
 
         this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchBody);
+
+
+    }
+
+    @Test
+    void findByAge() throws Exception{
+        Long searchAge = 29L;
+
+        List<Users> testUser = List.of(new Users(1L,"john","finlayson","john@john.com","yazjf","pass",29L,false));
+
+        String createJSON = this.map.writeValueAsString(testUser);
+
+        RequestBuilder mockRequest = get("/getByAge/" + searchAge);
+
+        ResultMatcher matchStatus = status().isFound();
+        ResultMatcher matchBody = content().json(createJSON);
+
+        this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchBody);
+
+
+    }
+
+    @Test
+    void findByMailingList() throws Exception{
+        Boolean onList = false;
+
+        List<Users> testUser = List.of(new Users(1L,"john","finlayson","john@john.com","yazjf","pass",29L,false));
+
+        String createJson = this.map.writeValueAsString(testUser);
+
+        RequestBuilder mockRequest = get("/findByMailingList/" + onList);
+
+        ResultMatcher matchStatus = status().isFound();
+        ResultMatcher matchBody = content().json(createJson);
+
+        this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchBody);
+
+
 
 
     }

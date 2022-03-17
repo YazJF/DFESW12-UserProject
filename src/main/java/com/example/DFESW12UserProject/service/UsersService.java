@@ -55,4 +55,14 @@ public class UsersService implements UsersInterface<Long>{
         Optional<Users> foundUser = this.repo.findById(id);
         return foundUser.orElse(null);
     }
+
+    @Override
+    public List<Users> findByAge(Long age){
+        return this.repo.findByAge(age);
+    }
+
+    @Override
+    public List<Users> findByMailingList(Boolean mailList) {
+        return this.repo.findByMailingList(mailList);
+    }
 }
