@@ -146,6 +146,7 @@ public class UsersServiceTest {
 
         Mockito.verify(this.rep, Mockito.times(1)).findByMailingList(userOnList);
     }
+
     
     @Test
     public void shouldThrowException() {
