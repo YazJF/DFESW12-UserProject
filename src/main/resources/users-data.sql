@@ -1,0 +1,1 @@
+INSERT INTO users(`age`,`email`,`firstname`,`mailing_list`,`password`,`surname`,`username`) VALUES ('29','john@john.com','john','false','pass','finlayson','yazjf')
